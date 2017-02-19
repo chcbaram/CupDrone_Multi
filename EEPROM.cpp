@@ -184,6 +184,8 @@ void LoadDefaults() {
 
 
     conf.activate[BOXANGLE]  = 1 << 0 | 1 << 1 | 1 << 2;
+    conf.activate[BOXBARO]  =  0 << 3 | 0 << 4 | 1 << 5;
+
 
 
     conf.angleTrim[0] = 0; conf.angleTrim[1] = 0;

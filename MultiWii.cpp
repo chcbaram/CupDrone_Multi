@@ -1062,6 +1062,7 @@ void loop () {
   #endif
     rcTime = currentTime + 20000;
     computeRC();
+
     // Failsafe routine - added by MIS
     #if defined(FAILSAFE)
       if ( failsafeCnt > (5*FAILSAFE_DELAY) && f.ARMED) {                  // Stabilize, and set Throttle to specified level

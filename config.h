@@ -61,11 +61,13 @@
     //#define MINTHROTTLE 1120 // for Super Simple ESCs 10A
     //#define MINTHROTTLE 1064 // special ESC (simonk)
     //#define MINTHROTTLE 1050 // for brushed ESCs like ladybird
-    #define MINTHROTTLE 1150 // (*) (**)
+    //#define MINTHROTTLE 1150 // (*) (**)
+    #define MINTHROTTLE 1000 // (*) (**)
 
   /****************************    Motor maxthrottle    *******************************/
     /* this is the maximum value for the ESCs at full power, this value can be increased up to 2000 */
-    #define MAXTHROTTLE 1850
+    //#define MAXTHROTTLE 1850
+    #define MAXTHROTTLE 2000
 
   /****************************    Mincommand          *******************************/
     /* this is the value for the ESCs when they are not armed
@@ -114,7 +116,7 @@
       //#define SIRIUS600       // Sirius Navigator IMU  using the WMP for the gyro
       //#define SIRIUS_AIR      // Sirius Navigator IMU 6050 32U4 from MultiWiiCopter.com           <- confirmed by Alex
       //#define SIRIUS_AIR_GPS  // Sirius Navigator IMU 6050 32U4 from MultiWiiCopter.com with GPS/MAG remote located
-      //#define SIRIUS_MEGAv5_OSD //  Paris_Sirius™ ITG3050,BMA280,MS5611,HMC5883,uBlox  http://www.Multiwiicopter.com <- confirmed by Alex
+      //#define SIRIUS_MEGAv5_OSD //  Paris_Sirius�꽓 ITG3050,BMA280,MS5611,HMC5883,uBlox  http://www.Multiwiicopter.com <- confirmed by Alex
       //#define MINIWII         // Jussi's MiniWii Flight Controller                                <- confirmed by Alex
       //#define MICROWII        // MicroWii 10DOF with ATmega32u4, MPU6050, HMC5883L, MS561101BA from http://flyduino.net/
       //#define CITRUSv2_1      // CITRUS from qcrc.ca
@@ -903,7 +905,7 @@ Also note, that maqgnetic declination changes with time, so recheck your value e
     //#define OPENTX                    // send OpenTX specific data
 
     // FRSKY standard telemetry specific selections
-    //#define COORDFORMAT_DECIMALMINUTES // uncomment to get the format DD°MM.mmmm for the coordinates - comment out to get the format DD.dddddd° for the coordinates
+    //#define COORDFORMAT_DECIMALMINUTES // uncomment to get the format DD째MM.mmmm for the coordinates - comment out to get the format DD.dddddd째 for the coordinates
     //#define KILOMETER_HOUR            // send speed in kilometers per hour instead of knots (default) - requested by OPENTX
     #define TELEMETRY_ALT_BARO        // send BARO based altitude, calibrated to 0 when arming, recommended if BARO available
     //#define TELEMETRY_ALT_GPS         // send GPS based altitude (altitude above see level), for FLD-02 don't use together with TELEMETRY_ALT_BARO

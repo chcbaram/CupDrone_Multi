@@ -38,6 +38,14 @@
   static uint8_t PCInt_RX_Pins[PCINT_PIN_COUNT] = {PCINT_RX_BITS}; // if this slowes the PCINT readings we can switch to a define for each pcint bit
 #endif
 
+#if defined(CupDrone)
+volatile uint16_t serialRcValue[RC_CHANS] = {1502, 1502, 1502, 1502, 1502, 1502, 1502, 1502};
+float alpha = 0.95;
+uint8_t paramList[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int16_t absolutedAccZ = 0;
+uint8_t flightState = 0;
+#endif
+
 void rxInt(void);
 
 /**************************************************************************************/
@@ -445,6 +453,8 @@ uint16_t readRawRC(uint8_t chan) {
     if (chan < RC_CHANS) {
       data = rcValue[rcChannel[chan]];
     } else data = 1500;
+  #elif defined(CupDrone)
+    data = serialRcValue[chan];
   #else
     uint8_t oldSREG;
     oldSREG = SREG; cli(); // Let's disable interrupts

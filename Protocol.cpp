@@ -159,6 +159,27 @@ const char *boardIdentifier = TARGET_BOARD_IDENTIFIER;
 
 #define MSP_CELLS                130   //out message         FRSKY Battery Cell Voltages
 
+#if defined(CupDrone)
+#define MSP_SET_RAW_RC_TINY      150   //in message          4 rc chan
+#define MSP_ARM                  151
+#define MSP_DISARM               152
+#define MSP_TRIM_UP              153
+#define MSP_TRIM_DOWN            154
+#define MSP_TRIM_LEFT            155
+#define MSP_TRIM_RIGHT           156
+#define MSP_TRIM_UP_FAST         157
+#define MSP_TRIM_DOWN_FAST       158
+#define MSP_TRIM_LEFT_FAST       159
+#define MSP_TRIM_RIGHT_FAST      160
+
+#define MSP_READ_TEST_PARAM      189
+#define MSP_SET_TEST_PARAM       190
+
+#define MSP_READ_TEST_PARAM      189
+#define MSP_HEX_NANO             199
+#endif
+
+
 #define MSP_SET_RAW_RC           200   //in message          8 rc chan
 #define MSP_SET_RAW_GPS          201   //in message          fix, numsat, lat, lon, alt, speed
 #define MSP_SET_PID              202   //in message          P I D coeff (9 are used currently)
@@ -382,16 +403,95 @@ void serialCom() {
   } // for
 }
 
+extern void go_arm();
+extern void go_disarm();
+
 void evaluateCommand(uint8_t c) {
 	uint32_t i, tmp = 0, junk;
 	uint8_t zczxczxczxc = 0;
 	const char *build = __DATE__;
+
+#if defined(CupDrone)
+	unsigned char auxChannels;
+	unsigned char aux;
+#endif
 
   switch(c) {
     // adding this message as a comment will return an error status for MSP_PRIVATE (end of switch), allowing third party tools to distinguish the implementation of this message
     //case MSP_PRIVATE:
     //  headSerialError();tailSerialReply(); // we don't have any custom msp currently, so tell the gui we do not use that
     //  break;
+
+#if defined(CupDrone)
+    case MSP_SET_RAW_RC_TINY:
+
+      supress_data_from_rx = 1;
+
+      for(uint8_t i = 0;i < 4;i++) {
+        rcSerial[i] = 1000 + read8() * 4;
+      }
+
+      auxChannels = read8();
+
+      aux = (auxChannels & 0xc0) >> 6;
+
+      if(aux == 0){
+        rcSerial[4] = 1000;
+      }
+      else if(aux == 1){
+        rcSerial[4] = 1500;
+      }
+      else{
+        rcSerial[4] = 2000;
+      }
+
+
+      aux = (auxChannels & 0x30) >> 4;
+
+      if(aux == 0){
+        rcSerial[5] = 1000;
+      }
+      else if(aux == 1){
+        rcSerial[5] = 1500;
+      }
+      else{
+        rcSerial[5] = 2000;
+      }
+
+
+      aux = (auxChannels & 0x0c) >> 2;
+
+      if(aux == 0){
+        rcSerial[6] = 1000;
+      }
+      else if(aux == 1){
+        rcSerial[6] = 1500;
+      }
+      else{
+        rcSerial[6] = 2000;
+      }
+
+      aux = (auxChannels & 0x03);
+
+      if(aux == 0){
+        rcSerial[7] = 1000;
+      }
+      else if(aux == 1){
+        rcSerial[7] = 1500;
+      }
+      else{
+        rcSerial[7] = 2000;
+      }
+
+      break;
+    case MSP_ARM:
+      go_arm();
+      break;
+    case MSP_DISARM:
+      go_disarm();
+      break;
+#endif
+
 #if defined(CLEANFLIGHT)
 	case MSP_API_VERSION:
 		headSerialReply(1 + API_VERSION_LENGTH);
@@ -476,14 +576,16 @@ void evaluateCommand(uint8_t c) {
 		tailSerialReply();
 		break;
 #endif
+
+#ifndef CupDrone
 	case MSP_SUPRESS_DATA_FROM_RX:
 		supress_data_from_rx = read8();
 
 		headSerialReply(1);
 		serialize8((uint8_t)supress_data_from_rx);
 		tailSerialReply();
-
 		break;
+#endif
     case MSP_SET_RAW_RC:
       s_struct_w((uint8_t*)&rcSerial,16);
       rcSerialCount = 50; // 1s transition
@@ -998,10 +1100,12 @@ void evaluateCommand(uint8_t c) {
       mspAck();
       break;
 #if GYRO
+#ifndef CupDrone
 	case MSP_GYRO_CALIBRATION:
 		if (!f.ARMED) calibratingG = 512;
 		mspAck();
 		break;
+#endif
 #endif
     #if MAG
       case MSP_MAG_CALIBRATION:

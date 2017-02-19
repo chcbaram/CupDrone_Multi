@@ -1712,8 +1712,6 @@
   #define MPU6050     // gyro+acc+mag
   #define MS561101BA  // baro
 
-
-
 // ACC and GYRO sensor position must be corrected depends on how you mounted the sensor board.
   //#define ACC_ORIENTATION(X, Y, Z) {imu.accADC[ROLL]  = Y; imu.accADC[PITCH]  = -X; imu.accADC[YAW]  =  Z;}
   //#define GYRO_ORIENTATION(X, Y, Z){imu.gyroADC[ROLL] =  X; imu.gyroADC[PITCH] = Y; imu.gyroADC[YAW] = -Z;}
@@ -1723,6 +1721,9 @@
 
 // do not use internal I2C pullups
   #undef INTERNAL_I2C_PULLUPS
+
+  #define EXT_MOTOR_RANGE
+
 #endif
 
 /**************************************************************************************/
