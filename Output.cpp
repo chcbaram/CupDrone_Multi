@@ -295,7 +295,7 @@ void writeMotors() { // [1000;2000] => [125;250]
         #elif defined(EXT_MOTOR_64KHZ)
           OCR1A = (motor[0] - 1000) >> 2; // max = 255
         #elif defined(EXT_MOTOR_32KHZ)
-          OCR1A = (motor[0] - 1000) >> 1; // max = 511
+          OCR1A = (motor[0] - 1000) >> 1; // max = 511 // r-right
         #elif defined(EXT_MOTOR_16KHZ)
           OCR1A = motor[0] - 1000;        //  pin 9
         #elif defined(EXT_MOTOR_8KHZ)
@@ -311,7 +311,7 @@ void writeMotors() { // [1000;2000] => [125;250]
       #elif defined(EXT_MOTOR_64KHZ)
         OCR1B = (motor[1] - 1000) >> 2;
       #elif defined(EXT_MOTOR_32KHZ)
-        OCR1B = (motor[1] - 1000) >> 1;
+        OCR1B = (motor[1] - 1000) >> 1; // f-right
       #elif defined(EXT_MOTOR_16KHZ)
         OCR1B = motor[1] - 1000;        //  pin 10
       #elif defined(EXT_MOTOR_8KHZ)
@@ -324,9 +324,11 @@ void writeMotors() { // [1000;2000] => [125;250]
       #if !defined(HWPWM6)
         // to write values > 255 to timer 4 A/B we need to split the bytes
         #ifndef EXT_MOTOR_RANGE 
-          TC4H = (2047-motor[2])>>8; OCR4A = ((2047-motor[2])&0xFF); //  pin 5
+          TC4H =   (2047-motor[2])>>8;
+          OCR4A = ((2047-motor[2])&0xFF); //  pin 5 // r-left
         #else
-          TC4H = 2047-(((motor[2]-1000)<<1)+16)>>8; OCR4A = (2047-(((motor[2]-1000)<<1)+16)&0xFF); //  pin 5
+          TC4H =   2047-(((motor[2]-1000)<<1)+16)>>8;
+          OCR4A = (2047-(((motor[2]-1000)<<1)+16)&0xFF); //  pin 5
         #endif
       #else
         #ifdef EXT_MOTOR_RANGE 

@@ -1722,7 +1722,8 @@
 // do not use internal I2C pullups
   #undef INTERNAL_I2C_PULLUPS
 
-  #define EXT_MOTOR_RANGE
+  //#define EXT_MOTOR_RANGE
+  //#define MOTOR_STOP
 
 #endif
 

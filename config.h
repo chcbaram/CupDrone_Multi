@@ -465,7 +465,7 @@ At this moment you can use this function only with WinGUI 2.3 release. MultiWiiC
          Motor 1-4 = 10-bit hardware PWM
          Motor 5-8 = 10-bit Software PWM
          Servos    = 10-bit Software PWM */
-      //#define HWPWM6
+      #define HWPWM6
 
     /**********************************    Aux 2 Pin     **********************************/
       /* AUX2 pin on pin RXO */
@@ -1048,7 +1048,7 @@ Also note, that maqgnetic declination changes with time, so recheck your value e
 
     // for 32u4 proc
     //#define EXT_MOTOR_64KHZ
-    //#define EXT_MOTOR_32KHZ
+    #define EXT_MOTOR_32KHZ
     //#define EXT_MOTOR_16KHZ
     //#define EXT_MOTOR_8KHZ
 
@@ -1057,7 +1057,7 @@ Also note, that maqgnetic declination changes with time, so recheck your value e
   /**************************************************************************************/
     /* motors will not spin when the throttle command is in low position
        this is an alternative method to stop immediately the motors */
-    //#define MOTOR_STOP
+    #define MOTOR_STOP
 
     /* some radios have not a neutral point centered on 1500. can be changed here */
     #define MIDRC 1500
