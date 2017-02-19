@@ -1709,7 +1709,7 @@
 
 #if defined(CupDrone)
 // define sensors
-  #define MPU9250     // gyro+acc+mag
+  #define MPU6050     // gyro+acc+mag
   #define MS561101BA  // baro
 
 
