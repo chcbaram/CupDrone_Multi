@@ -181,6 +181,11 @@ void LoadDefaults() {
     conf.dynThrPID = 0;
     conf.thrMid8 = 50; conf.thrExpo8 = 0;
     for(i=0;i<CHECKBOXITEMS;i++) {conf.activate[i] = 0;}
+
+
+    conf.activate[BOXANGLE]  = 1 << 0 | 1 << 1 | 1 << 2;
+
+
     conf.angleTrim[0] = 0; conf.angleTrim[1] = 0;
     conf.powerTrigger1 = 0;
   #endif // SUPPRESS_DEFAULTS_FROM_GUI
